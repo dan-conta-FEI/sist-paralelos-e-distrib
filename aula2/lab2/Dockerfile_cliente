@@ -1,8 +1,8 @@
-FROM python:3.13.7-alpine3.21
+FROM python:3.13-alpine3.21
 
 WORKDIR /app
 
-RUN pip install grpcio grpcio-tools
+RUN pip install --no-cache-dir grpcio grpcio-tools "fastapi[standard]"
 
 COPY ./task_manager.proto .
 
@@ -10,4 +10,4 @@ RUN python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. task_mana
 
 COPY ./cliente.py .
 
-CMD ["python", "cliente.py"]
+CMD ["fastapi", "run", "cliente.py", "--host", "0.0.0.0", "--port", "8000"]
