@@ -24,6 +24,18 @@ services:
     deploy:
       replicas: 1
 
+  publisher2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cc7261:pyzmq
+    volumes:
+      - ./publisher2.py:/app/main.py
+    depends_on:
+      - proxy
+    deploy:
+      replicas: 1
+
   subscriber:
     build:
       context: .
@@ -31,6 +43,30 @@ services:
     image: cc7261:pyzmq
     volumes:
       - ./subscriber.py:/app/main.py
+    depends_on:
+      - proxy
+    deploy:
+      replicas: 1
+
+  subscriber2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cc7261:pyzmq
+    volumes:
+      - ./subscriber2.py:/app/main.py
+    depends_on:
+      - proxy
+    deploy:
+      replicas: 1
+
+  subscriber3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cc7261:pyzmq
+    volumes:
+      - ./subscriber3.py:/app/main.py
     depends_on:
       - proxy
     deploy:
